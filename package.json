@@ -2,7 +2,10 @@
   "name": "resque-demo",
   "version": "0.0.1",
   "dependencies": {
-    "express": "2.5.x"
+    "express": "2.5.x",
+    "coffee-resque": "~0.1.6",
+    "redis": "~0.7.2",
+    "hiredis": "~0.1.14"
   },
   "engines": {
     "node": "0.6.x"
