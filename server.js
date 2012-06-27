@@ -2,6 +2,9 @@
 var express = require('express');
 var app = express.createServer(express.logger());
 
+// Require Coffee-Script
+require('coffee-script');
+
 //Redis Stuff
 var redis = require("redis"),
   client = redis.createClient();
@@ -11,16 +14,14 @@ var resque = require('coffee-resque').connect({
   redis: redis
 });
 
-//GET /
-app.get('/', function(request, response) {
-  response.send('Hello World!');
-});
-
 //Configuration
 var port = process.env.PORT || 5000;
 app.set('port', port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+
+// Routes
+require('./apps/index/routes')(app)
 
 //Start listening
 app.listen(port, function() {
