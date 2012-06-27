@@ -1,0 +1,21 @@
+h2 The Queue
+
+.row
+  .span2
+    form(action='/add', method='post')
+      button.btn.full-width Add new Job
+    form(action='/start', method='post')
+      button.btn.btn-success.full-width Start Worker
+
+  .span5
+    table.table.table-bordered.table-striped
+      thead
+        tr
+          th # in Queue
+          th Kind of Job
+          th Status
+      tbody
+        tr
+          td Cupcake
+          td ipsum
+          td dolor sit
