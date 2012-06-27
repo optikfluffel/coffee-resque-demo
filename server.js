@@ -20,6 +20,9 @@ app.set('port', port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
+// Set public folder for static files
+app.use(express.static(__dirname + '/public'));
+
 // Routes
 require('./apps/index/routes')(app)
 
