@@ -1,7 +1,13 @@
+# Redis Stuff
+redis = require("redis")
+redisClient = redis.createClient()
+
 # implement your job functions
 myJobs =
-  add: (a, b, callback) ->
-    callback a + b
+  wait: (time, callback) ->
+    setTimeout ( ->
+      callback("succed")
+    ), time
 
   succeed: (arg, callback) ->
     callback()
@@ -11,8 +17,7 @@ myJobs =
 
 # setup a worker
 worker = require("coffee-resque").connect(
-  host: redisHost
-  port: redisPort
+  redis: redisClient
 ).worker("*", myJobs)
 
 
@@ -29,5 +34,7 @@ worker.on "error", (err, worker, queue, job) ->
 
 # triggered on every successful job run
 worker.on "success", (worker, queue, job, result) ->
+  redisClient.publish "pubsub", "success"
 
-worker.start()
+@start = ->
+  worker.start()
