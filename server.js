@@ -5,15 +5,6 @@ var app = express.createServer(express.logger());
 // Require Coffee-Script
 require('coffee-script');
 
-// Redis Stuff
-var redis = require("redis"),
-  client = redis.createClient();
-
-// Coffee-Resque Stuff
-var resque = require('coffee-resque').connect({
-  redis: redis
-});
-
 // Configuration
 var port = process.env.PORT || 5000;
 app.set('port', port);

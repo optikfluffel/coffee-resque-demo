@@ -2,10 +2,8 @@ h2 The Queue
 
 .row
   .span2
-    form(action='/add', method='post')
-      button.btn.full-width Add new Job
-    form(action='/start', method='post')
-      button.btn.btn-success.full-width Start Worker
+    button#add.btn.full-width Add new Job
+    button#start.btn.btn-success.full-width Start Worker
 
   .span5
     table.table.table-bordered.table-striped
@@ -13,9 +11,36 @@ h2 The Queue
         tr
           th # in Queue
           th Kind of Job
-          th Status
       tbody
-        tr
-          td Cupcake
-          td ipsum
-          td dolor sit
+        
+
+script(src='http://localhost:8080/socket.io/socket.io.js')
+script
+  var socket = io.connect('http://localhost:8080');
+  socket.on('begin', function (data) {
+    socket.emit('ready');
+  })
+  socket.on('update', function (data) {
+    updateTable(data.jobs);
+  });
+
+  function updateTable (jobs) {
+    $('table tbody tr').remove();
+    $.each(jobs, function(key,value){
+      var id = key;
+      job = $.parseJSON(value);
+      var kind = job.class;
+      var wait = job.args;
+      $('table tbody').append('<tr><td>' + id + '</td><td>' + kind + ' ' + wait + '</td></tr>');
+    })
+  }
+
+  $(document).ready(function(){
+    $('#add').click(function(){
+      socket.emit('add', { wait: 1000 });
+    });
+    $('#start').click(function(){
+      socket.emit('start');
+    });
+  });
+  
