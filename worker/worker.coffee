@@ -8,7 +8,9 @@ connection = resque.connect
   redis: redisClient
 
 # Helper for making the worker stop when the queue is empty
-class NonPollingWorker extends resque.Worker
+# Thanks go to @steelThread for helping me with that
+# https://github.com/technoweenie/coffee-resque/issues/24
+class AutoStopWorker extends resque.Worker
   pause: -> @end()
 
 # implement your job functions
@@ -24,8 +26,8 @@ myJobs =
   fail: (arg, callback) ->
     callback new Error("fail")
 
-# setup a worker
-worker = new NonPollingWorker connection, "*", myJobs
+# setup the above created AutoStopWorker
+worker = new AutoStopWorker connection, "*", myJobs
 
 # some global event listeners
 #
@@ -42,5 +44,6 @@ worker.on "error", (err, worker, queue, job) ->
 worker.on "success", (worker, queue, job, result) ->
   redisClient.publish "pubsub", "success"
 
+# simply the start method
 @start = ->
   worker.start()

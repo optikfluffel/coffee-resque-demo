@@ -17,6 +17,7 @@ routes = (app) ->
 
   # Socket
   io.sockets.on "connection", (socket) ->
+    # simple pubsub for live updating the table
     sub = redis.createClient()
     sub.subscribe "pubsub"
     
@@ -35,6 +36,7 @@ routes = (app) ->
     socket.on "start", (message) ->
       worker.start()
 
+    # Handle socket disconnect
     socket.on "disconnect", ->
       sub.unsubscribe "pubsub"
       sub.quit()
