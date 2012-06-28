@@ -2,11 +2,20 @@
 redis = require("redis")
 redisClient = redis.createClient()
 
+# Coffee-Resque Stuff
+resque = require 'coffee-resque'
+connection = resque.connect
+  redis: redisClient
+
+# Helper for making the worker stop when the queue is empty
+class NonPollingWorker extends resque.Worker
+  pause: -> @end()
+
 # implement your job functions
 myJobs =
   wait: (time, callback) ->
     setTimeout ( ->
-      callback("succed")
+      callback()
     ), time
 
   succeed: (arg, callback) ->
@@ -16,13 +25,10 @@ myJobs =
     callback new Error("fail")
 
 # setup a worker
-worker = require("coffee-resque").connect(
-  redis: redisClient
-).worker("*", myJobs)
-
+worker = new NonPollingWorker connection, "*", myJobs
 
 # some global event listeners
-
+#
 # triggered every time the worker polls
 worker.on "poll", (worker, queue) ->
 
