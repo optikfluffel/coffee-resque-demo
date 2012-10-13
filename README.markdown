@@ -1,10 +1,8 @@
-Coffee-Resque Demo
-===
+# Coffee-Resque Demo
 
 This will become a little Demo of [Coffee-Resque](https://github.com/technoweenie/coffee-resque "technoweenie/coffee-resque") together with [node.js](http://nodejs.org "node.js") and [express.js](http://expressjs.com "Express - node web framework").
 
-How to try it? (on OS X and Linux)
----
+## How to try it? (on OS X and Linux)
 
 I assume you have [node.js](http://nodejs.org/#download "node.js") and [npm](http://npmjs.org "npm - Node Package Manager") installed and ready to work.
 
