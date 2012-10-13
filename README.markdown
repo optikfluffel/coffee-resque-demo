@@ -15,3 +15,7 @@ git clone git://github.com/optikfluffel/coffee-resque-demo.git
 * Then navigate into the new folder with ```cd coffee-resque-demo``` and install the dependencies using ```npm install```
 * Now you simply have to start the redis-server with ```redis-server``` and the WebApp using ```npm start```
 * After all that just go to you browser and check out the demo, usually at [http://localhost:5000](http://localhost:5000 "Coffee-Resque Demo")
+
+## Edorsement
+
+If you like it feel free to endorse me: [![](http://api.coderwall.com/optikfluffel/endorsecount.png)](http://coderwall.com/optikfluffel)
